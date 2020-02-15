@@ -39,7 +39,7 @@ const App = () => {
   }
 
   const [currentScreen, setCurrentScreen] = React.useState(
-    React.createElement(screens['login'].component, screens['login'].props())
+    React.createElement(screens.login.component, screens.login.props())
   )
 
   React.useEffect(() => {
