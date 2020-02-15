@@ -3,6 +3,7 @@ import Login from './lib/Login'
 import Register from './lib/Register'
 import Tasks from './lib/Tasks'
 import CreateTask from './lib/CreateTask'
+import AsyncStorage from '@react-native-community/async-storage'
 
 const App = () => {
   const changeCurrentScreen = (newScreen) => {
@@ -11,6 +12,12 @@ const App = () => {
     )
   }
   const [token, setToken] = React.useState('')
+
+  AsyncStorage.getItem('token').then(value => {
+    if (value) {
+      setToken(value)
+    }
+  })
 
   const screens = {
     login: {
@@ -31,11 +38,14 @@ const App = () => {
     }
   }
 
-  const [currentScreen, setCurrentScreen] = React.useState(React.createElement(screens['login'].component, screens['login'].props()))
+  const [currentScreen, setCurrentScreen] = React.useState(
+    React.createElement(screens['login'].component, screens['login'].props())
+  )
 
   React.useEffect(() => {
-    if (token)
+    if (token) {
       changeCurrentScreen('tasks')
+    }
   }, [token])
 
   return (
